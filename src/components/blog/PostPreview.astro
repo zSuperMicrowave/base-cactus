@@ -1,7 +1,9 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import { getPostSortDate } from "@/data/post";
 import type { HTMLTag, Polymorphic } from "astro/types";
+import type { CollectionEntry } from "astro:content";
+
+import { getPostSortDate } from "@/data/post";
+
 import FormattedDate from "../FormattedDate.astro";
 
 type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
@@ -13,11 +15,35 @@ const { as: Tag = "div", post, withDesc = false } = Astro.props;
 const postDate = getPostSortDate(post);
 ---
 
-<FormattedDate class="min-w-[120px] text-gray-600 dark:text-gray-400" date={postDate} />
-<Tag>
-	{post.data.draft && <span class="text-red-500">(Draft) </span>}
-	<a class="cactus-link" data-astro-prefetch href={`/posts/${post.slug}/`}>
-		{post.data.title}
-	</a>
-</Tag>
+<div class="flex sm:justify-between">
+	<Tag>
+		{post.data.draft && <span class="text-red-500">(Draft) </span>}
+		<span class="font-bold text-accent no-underline sm:text-lg">#</span>
+		<a
+			class="cactus-link text-base text-accent-2 sm:text-lg"
+			data-astro-prefetch
+			href={`/posts/${post.slug}/`}
+		>
+			{post.data.title}
+		</a>
+	</Tag>
+	<FormattedDate
+		class="invisible hidden text-base text-quote sm:visible sm:block"
+		date={postDate}
+	/>
+</div>
+
 {withDesc && <q class="line-clamp-3 italic">{post.data.description}</q>}
+
+<div class="ms-4 text-xs sm:ms-0 sm:text-right sm:text-sm">
+	{
+		post.data.tags.map((s: any, i: any) => (
+			<>
+				<a href={`/tags/${s}/`} class="cactus-link">
+					#{s}
+				</a>
+				<span>{i < post.data.tags.length - 1 && ", "}</span>
+			</>
+		))
+	}
+</div>
