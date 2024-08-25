@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+
 import { fontFamily } from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 
@@ -23,16 +24,16 @@ export default {
 	plugins: [
 		require("@tailwindcss/typography"),
 		require("@tailwindcss/aspect-ratio"),
-		plugin(({ addComponents }) => {
+		plugin(function ({ addComponents }) {
 			addComponents({
 				".cactus-link": {
 					"&:hover": {
 						"@apply decoration-link decoration-2": {},
 					},
-					"@apply underline underline-offset-2": {},
+					"@apply text-link underline underline-offset-2": {},
 				},
 				".title": {
-					"@apply text-2xl font-semibold text-accent-2": {},
+					"@apply text-xl sm:text-2xl font-semibold text-accent-2": {},
 				},
 			});
 		}),
