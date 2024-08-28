@@ -39,10 +39,8 @@ const postDate = getPostSortDate(post);
 	{
 		post.data.tags.map((s: any, i: any) => (
 			<>
-				<a href={`/tags/${s}/`} class="cactus-link">
-					#{s}
-				</a>
-				<span>{i < post.data.tags.length - 1 && ", "}</span>
+				<a href={`/tags/${s}/`} class="cactus-link">#{s}</a>
+				{i < post.data.tags.length - 1 && ", "}
 			</>
 		))
 	}
